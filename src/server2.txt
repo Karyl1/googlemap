@@ -1,0 +1,15 @@
+server2.js à mettre dans le répertoire où se trouve vos fichiers de projet.
+appel : node server2
+listen sur le port 8080
+
+Sauvegarde d'un fichier texte : méthode POST
+   fetch('http://localhost:8080/save?name=toto.txt',{
+        method: 'POST',
+        body: "La chaîne à écrire."
+    })
+    .then(data=>data.json())
+    .then(res=>{console.log(res)})
+    .catch(error=>{console.log(error)});
+
+Lecture du fichier texte : méthode GET classique
+    http://localhost:8080/load?name=toto.txt

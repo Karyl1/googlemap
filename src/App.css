@@ -17,7 +17,21 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
+.export{
+  position: relative;
+  top: 3%;
+  left: 0%;
+  width: 7%;
+}
+.import{
+  position: relative;
+  bottom: 0;
+  left: 0%;
+  width: 7%;
+}
+h1{
+  color: blue;
+}
 .App-link {
   color: #61dafb;
 }
