@@ -3,6 +3,9 @@ import React, {Component} from 'react';
 import Marqueur from './Marker';
 import Export from './Export';
 import Import from './Import';
+// import Liste from './Liste';
+
+
 
 export class MapContainer extends Component {
 
@@ -10,7 +13,7 @@ export class MapContainer extends Component {
         super(props);
 
         this.mark=[];
-
+        // this.geox=new Geox();
         this.state={nbmark:0};
 
         this.mapClicked=this.mapClicked.bind(this);
@@ -33,10 +36,9 @@ export class MapContainer extends Component {
         this.mark.pop();
         this.setState({nbmark:this.mark.length});
     }
-    update=()=>{this.setState({nbmark:10})};
+    update = () => {this.setState({nbmark:10})};
     render(){
         let marko = [];
-        console.log(marko)
         for (let i=0;i<this.mark.length;i++){
             marko.push(<Marker id={i} draggable={true} title={this.mark[i].nom} position={{lat:this.mark[i].lat, lng:this.mark[i].lng}} />);
         }
@@ -53,8 +55,9 @@ export class MapContainer extends Component {
 
             {marko}
             </Map>
-            <Export tab={this.mark}/>
-            <Import tab2={this.mark} callback={this.update} />
+            <Export jsonSave={this.mark}/>
+            <Import jsonLoad={this.mark} callback={this.update}/> 
+            {/* <Liste />  */}
             </div>
         );
     }

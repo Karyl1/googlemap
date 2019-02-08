@@ -20,15 +20,17 @@
 .export{
   position: relative;
   top: 3%;
-  left: 0%;
   width: 7%;
 }
 .import{
   position: relative;
-  bottom: 0;
-  left: 0%;
   width: 7%;
 }
+.liste{
+  position: relative;
+  width: 7%;
+}
+
 h1{
   color: blue;
 }
