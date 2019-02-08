@@ -5,6 +5,12 @@
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 40vmin;
+  width: 17%;
+}
+.App-logoo {
+  animation: App-logo-spin infinite 1s linear;
+  height: 40vmin;
+  width: 17%;
 }
 
 .App-header {
@@ -21,6 +27,20 @@
 .App-link {
   color: #61dafb;
 }
+.cul{
+  font-size: 50px;
+  color: orangered;
+}
+.cul1{
+  font-size: 50px;
+  color: orchid;
+}
+a.active{
+  color: red;
+}
+a{
+  margin-left: 20px;
+}
 
 @keyframes App-logo-spin {
   from {
@@ -29,4 +49,40 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/** CSS MAP **/
+
+.MAP{
+
+  float: left;
+}
+.test {
+  height: 20%;
+}
+.cuicui{
+  height: 80%;
+  width: 25%;
+  background-color: black;
+  position: absolute;
+  margin-left: 75%;
+}
+.geox {
+  padding-left: 35%;
+}
+.cuii{
+  position: absolute;
+  height: 5%;
+  width: 75%;
+  background-color: black;
+  margin-top: 38.2%;
+}
+.culcul{
+  position: absolute;
+  height: 60%;
+  width: 100%;
+  margin-top: 54.3%;
+
+  background-color: grey;
+
 }
