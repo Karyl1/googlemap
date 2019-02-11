@@ -1,16 +1,28 @@
 import React, { Component } from "react";
-import GoogleApiWrapper from './map';
+import "./App.css";
+import MapContainer from "./Mapcontainer";
 
 
+class App extends Component {
+  render() {
+    return (
+<div>
+            <div>
+                <h1 className="TitrePage">GEOX LA MAP QUI RESPIRE</h1>
 
-class App extends Component{
 
-    render(){
-        return (
-            < GoogleApiWrapper />
-        )
-    }
+            <div className="Page">
+                <MapContainer className="MAP"/>
 
- }
+            </div>
 
- export default App;
+            </div>
+
+  </div>
+
+
+    );
+  }
+}
+
+export default App;

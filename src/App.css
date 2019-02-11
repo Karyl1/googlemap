@@ -1,10 +1,19 @@
 .App {
   text-align: center;
 }
+body{
+  background: url("https://i.imgur.com/w1RiP7a.jpg");
+}
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 40vmin;
+  width: 17%;
+}
+.App-logoo {
+  animation: App-logo-spin infinite 1s linear;
+  height: 40vmin;
+  width: 17%;
 }
 
 .App-header {
@@ -21,6 +30,20 @@
 .App-link {
   color: #61dafb;
 }
+.cul{
+  font-size: 50px;
+  color: orangered;
+}
+.cul1{
+  font-size: 50px;
+  color: orchid;
+}
+a.active{
+  color: red;
+}
+a{
+  margin-left: 20px;
+}
 
 @keyframes App-logo-spin {
   from {
@@ -29,4 +52,47 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/** CSS MAP **/
+
+.MAAP{
+
+  margin-top: 300px;
+  position: relative;
+}
+
+.sectiondroit{
+  height: 80%;
+  width: 25%;
+  background-color: black;
+  opacity: 1;
+  position: relative;
+  margin-left: 75%;
+}
+.TitrePage {
+  padding-left: 35%;
+  color: white;
+  font-family: aakar  ;
+}
+.sectionbas{
+  position: relative
+;
+  background-color: white;
+  background-color: transparent;
+  margin-top: 28%;
+
+
+}
+.Page{
+  margin-top: 5%;
+}
+.MarkerConfig{
+  position: absolute;
+  height: auto;
+  width: 100%;
+
+
+  background-color: grey;
+
 }
