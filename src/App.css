@@ -55,6 +55,13 @@ a{
 }
 
 /** CSS MAP **/
+li{
+ list-style-type: none;
+}
+h2{
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
 
 .MAAP{
 
@@ -80,13 +87,19 @@ a{
 ;
   background-color: white;
   background-color: transparent;
-  margin-top: 28%;
+  margin-top: 30%;
 
 
 }
 .Page{
   margin-top: 5%;
 }
+
+#inputxt{
+ 
+  height: 130px;
+}
+
 .MarkerConfig{
   position: absolute;
   height: auto;
@@ -95,4 +108,22 @@ a{
 
   background-color: grey;
 
+}
+.MarkeurInfo{
+  
+}
+
+.ulmap{
+  margin-bottom: 0px;
+}
+.imgdiv{
+  width: 200px;
+  max-width: 200px;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.buttondelete{
+  margin-left: 20px;
 }

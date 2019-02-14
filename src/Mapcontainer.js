@@ -4,6 +4,8 @@ import "./App.css";
 import MarkerConfig from "./MarkerConfig";
 import Export from './Export';
 import Import from './Import';
+import Image1 from './image1.png';
+import Image2 from './image2.png'
 
 
 
@@ -12,14 +14,16 @@ import Import from './Import';
 
 export class Markeur {
 
-    constructor(nom,lat,lng,titre,texte,img){
+    constructor(nom,lat,lng){
 
-        this.nom=nom;
+        this.nom=nom;  
         this.lat=lat;
         this.lng=lng;
-        this.titre=titre;
-        this.texte=texte;
-        this.img=img;
+        this.titre="ik";
+        this.texte="";
+        this.img="";
+        this.icon=Image2;
+        this.important= 0;
 
 
     }
@@ -77,13 +81,28 @@ update = () => {this.setState({nbmk:10})};
         console.log(this.mk[id]);
         this.mk[id].lng=newlng;
         this.mk[id].lat=newlat;
-        this.setState({nmbk:this.mk.length});
+        this.setState({nmbk:this.mk.length,showingInfoWindow:false});
+        
     };
 
     affichage =(markeur,p2,event) => {
     this.setState({on:!this.state.on})
 
     };
+
+    test = (titre,text,img,number) => {
+        console.log(this.mk);
+        console.log(titre);
+        console.log(text);
+        console.log(img);
+        console.log(number);
+        this.mk[this.state.selectedPlace.id].icon = Image1
+        this.mk[this.state.selectedPlace.id].important = 1;
+        this.setState({nmbk:this.mk.length});
+        
+        
+    
+    }
 
 
 
@@ -117,15 +136,17 @@ update = () => {this.setState({nbmk:10})};
 
     }
     onMarkerClick = (props, marker, event) =>{
-
-
         this.setState({
             selectedPlace: props,
             activeMarker: marker,
             Event: event,
-            showingInfoWindow:true,
-
-        });
+            });
+        if(this.mk[props.id].important === 1){
+            this.setState({showingInfoWindow:true})
+        }else {
+            this.setState({showingInfoWindow:false})
+        }
+               
         console.log(this.state.Event)
 };
     FunctionTestAfficher = () => {
@@ -149,21 +170,34 @@ update = () => {this.setState({nbmk:10})};
 
     render() {
 
-
+        this.icon = Image1
         let  rows = [];
         let  poli = [];
+        let  info="";
+
         for (var i = 0; i< this.mk.length;i++){
             rows.push(
                 <Marker
                 id={i} name={this.mk[i].nom}
                 onClick={this.onMarkerClick}
                 draggable={true} onDragend={this.newDragend}
-                position={{lat: this.mk[i].lat,lng: this.mk[i].lng}}/>);
+                position={{lat: this.mk[i].lat,lng: this.mk[i].lng}}
+                icon= {this.mk[i].icon}
+                />);
+    
 
 
             poli.push(rows[i].props.position)
       }
 
+      if(this.mk.length > 1){
+          info= <div className="MarkeurInfo">
+          <h2>le markeur {this.state.selectedPlace.id}</h2>
+          <p>[me servira d'appéritif]</p>
+          <img className="imgdiv" src="https://www.optoma.fr/images/ProductApplicationFeatures/4kuhd/banner.jpg"/>
+      </div>
+      }
+       
         const polySelector = this.state.Poly ? poli : null;
 
 
@@ -171,7 +205,7 @@ update = () => {this.setState({nbmk:10})};
 
         return (
             <div className="MAPP">
-
+console.log("ici "+ img)
                 <Map
                     style={style}
                     google={this.props.google}
@@ -193,17 +227,14 @@ update = () => {this.setState({nbmk:10})};
                         onClose={this.windowHasClosed}
                         marker={this.state.activeMarker}
                         visible={this.state.showingInfoWindow}>
-                        <div>
-                            <p>le markeur {this.state.selectedPlace.id}</p>
-                            <p>me servira d'appéritif</p>
-                            <img src="https://www.girlizz.com/img_jeux/1912.jpg"/>
-                        </div>
+                        {info}
+                        
                     </InfoWindow>
 
                 </Map>
 
                 <div className="sectiondroit">
-                    <ul>
+                    <ul className="ulmap">
                         <li><button onClick={this.deleteAll.bind(this)}>Supprimer tous les markeurs</button></li>
                         <br/>
                         <li><button onClick={this.delete.bind(this)}>Supprimer dernier markeur</button></li>
@@ -214,6 +245,8 @@ update = () => {this.setState({nbmk:10})};
                     <MarkerConfig
                         laat={this.state.selectedPlace.id}
                         delete={this.SupprimerMarkeurActuel}
+                        add={this.test}
+                        Markeur={this.mk[this.state.selectedPlace.id]}
 
                     />
                     </div>
