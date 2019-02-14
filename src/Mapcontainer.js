@@ -89,7 +89,7 @@ update = () => {this.setState({nbmk:10})};
 
     };
 
-    test = (titre,text,img,number) => {
+    ElementDiv = (titre,text,img,number) => {
         console.log(this.mk);
         this.mk[this.state.selectedPlace.id].titre = titre;
         this.mk[this.state.selectedPlace.id].text = text;
@@ -100,6 +100,7 @@ update = () => {this.setState({nbmk:10})};
         console.log(number);
         this.mk[this.state.selectedPlace.id].icon = Image1
         this.mk[this.state.selectedPlace.id].important = 1;
+        this.mk[this.state.selectedPlace.id].img = img
         this.setState({nmbk:this.mk.length});
         
         
@@ -116,13 +117,14 @@ update = () => {this.setState({nbmk:10})};
     delete () {
         this.mk.pop();
         this.setState({nbmk:this.mk.length})
-        this.setState({nbmk: this.mk.length, showingInfoWindow: false})
+        this.setState({nbmk: this.mk.length, showingInfoWindow: false,selectedPlace: 0})
     }
 /** permet de supprimer tous les markeurs depuis le bouton **/
     deleteAll () {
 
         this.mk.splice(0, this.mk.length);
-        this.setState({nbmk: this.mk.length, showingInfoWindow: false})
+        this.setState({nbmk: this.mk.length, showingInfoWindow: false, selectedPlace: 0})
+
     }
 
 
@@ -163,8 +165,8 @@ update = () => {this.setState({nbmk:10})};
 
         console.log(this.mk[this.state.selectedPlace.id]);
         this.mk.splice(this.state.selectedPlace.id,1);
-        this.setState({nbmk:this.mk.length})
-        this.setState({nbmk: this.mk.length, showingInfoWindow: false})
+    
+        this.setState({nbmk: this.mk.length, showingInfoWindow: false, selectedPlace: 0})
 
     };
 
@@ -197,7 +199,7 @@ console.log(this)
           info= <div className="MarkeurInfo">
           <h2>{this.mk[this.state.selectedPlace.id].titre}</h2>
           <p>{this.mk[this.state.selectedPlace.id].text}</p>
-          <img className="imgdiv" src="https://www.optoma.fr/images/ProductApplicationFeatures/4kuhd/banner.jpg"/>
+          <img className="imgdiv" src={this.mk[this.state.selectedPlace.id].img}/>
       </div>
       }
        
@@ -223,6 +225,7 @@ console.log("ici "+ img)
                     {rows}
                     <Polyline
                     path={polySelector}
+                    strokeWeight={2}
                     />
 
                     <InfoWindow
@@ -248,7 +251,7 @@ console.log("ici "+ img)
                     <MarkerConfig
                         laat={this.state.selectedPlace.id}
                         delete={this.SupprimerMarkeurActuel}
-                        add={this.test}
+                        add={this.ElementDiv}
                         Markeur={this.mk[this.state.selectedPlace.id]}
 
                     />
