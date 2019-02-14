@@ -19,7 +19,7 @@ export class Markeur {
         this.nom=nom;  
         this.lat=lat;
         this.lng=lng;
-        this.titre="ik";
+        this.titre="";
         this.texte="";
         this.img="";
         this.icon=Image2;
@@ -51,12 +51,11 @@ export class MapContainer extends Component {
             nbmk: 1,
             isOpen: false,
             Poly: true,
-            id: 0,
             on: props.on,
             showingInfoWindow: false,
             activeMarker: {},
-            selectedPlace: {},
-            Event: {},
+            selectedPlace: 0,
+            
 
 
         };
@@ -92,6 +91,9 @@ update = () => {this.setState({nbmk:10})};
 
     test = (titre,text,img,number) => {
         console.log(this.mk);
+        this.mk[this.state.selectedPlace.id].titre = titre;
+        this.mk[this.state.selectedPlace.id].text = text;
+
         console.log(titre);
         console.log(text);
         console.log(img);
@@ -189,11 +191,12 @@ update = () => {this.setState({nbmk:10})};
 
             poli.push(rows[i].props.position)
       }
-
-      if(this.mk.length > 1){
+console.log(this)
+      if((this.mk.length > 0)&&(this.state.selectedPlace != 0)){
+          
           info= <div className="MarkeurInfo">
-          <h2>le markeur {this.state.selectedPlace.id}</h2>
-          <p>[me servira d'appéritif]</p>
+          <h2>{this.mk[this.state.selectedPlace.id].titre}</h2>
+          <p>{this.mk[this.state.selectedPlace.id].text}</p>
           <img className="imgdiv" src="https://www.optoma.fr/images/ProductApplicationFeatures/4kuhd/banner.jpg"/>
       </div>
       }
