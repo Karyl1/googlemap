@@ -1,0 +1,1 @@
+[{"nom":"point 0","lat":43.599905614925156,"lng":1.4427283442518046,"titre":"","texte":"","img":"","important":0},{"nom":"point 1","lat":43.6002086259635,"lng":1.4434364474317363,"titre":"","texte":"","img":"","important":0},{"nom":"point 2","lat":43.599952232107306,"lng":1.4438226855298808,"titre":"","texte":"","img":"","important":0}]

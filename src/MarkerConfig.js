@@ -31,7 +31,7 @@ class MarkerConfig extends Component    {
                 
                 <div>
                     <ul>
-                        <h2>Titre>></h2>
+                        <h2>Titre</h2>
                         <li> <input placeholder="Votre titre..."    id="titre"/></li>
                         <br/>
                         <br/>   
@@ -41,7 +41,7 @@ class MarkerConfig extends Component    {
                         <h2>image (HTML)</h2>
                         <li><input placeholder="https://votre-image.exemple" id="inputClick"   type="text"/></li>
                        
-                        <input onClick={this.toto}  type="submit"/>
+                        <input onClick={this.toto}  type="submit" value="Envoyer"/>
                     </ul>
                 </div>
 
