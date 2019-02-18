@@ -1,50 +1,77 @@
 import React, { Component } from 'react'
-import {Map, InfoWindow, Marker, GoogleApiWrapper, Polyline} from 'google-maps-react';
+import { Map, InfoWindow, Marker, GoogleApiWrapper, Polyline } from 'google-maps-react';
 
 import Poly from './polyline';
 import MyMarker from './marker';
+
 
 export class GMaps extends Component {
 
     constructor(props) {
         super(props);
-        this.mk=[];
-        this.mkpoly=[];
-
-        this.state={nbmk:1, isOpen: false};
-        this.mapClicked=this.mapClicked.bind(this);
+        this.mkpoly = [];
+        this.tab = [];
+        this.lines= [];
+        this.rows= []
+        this.state = {
+       
+            isOpen: false,
+        };
     }
 
-
-    delete = ()  =>{
-        this.mk.pop();
-        this.setState({nbmk:this.mk.length})
+    delete = () => {
+        this.tab.pop();
+        this.setState({ nbmk: this.tab.length })
     }
 
-    mapClicked(p1, p2, clickEvent) {
-        const { latLng } = clickEvent;
-        const lat = latLng.lat();
-        const lng = latLng.lng();
-        this.mk.push(new MyMarker("Nouveau",lat,lng));
-        this.mkpoly.push(new Poly(lat,lng));
-        this.setState({nbmk:this.mk.length});
+    mapClicked = (p1, p2, clickEvent) => {
 
-    }
 
-    moveMarker(marker,map,clickEvent) {
         const { latLng } = clickEvent;
         const lat = latLng.lat();
         const lng = latLng.lng();
 
+        this.tab.push(new MyMarker("Nouveau", lat, lng));
+        // this.mkpoly.push(new Poly(lat, lng))
+
+        this.rows = this.tab.map((el, index) => {
+            return <Marker draggable={true} onDragend={this.moveMarker} title={el.nom} key={index} id={index} position={{ lat: el.lat, lng: el.lng }} />
+        })
+        
+        this.lines = this.rows.map((el) => {
+           return el.props.position
+        })
+console.log("arno"+this.lines);
+
+        this.mkpoly.push(<Polyline path={this.lines} geodesic={true} options={{ strokeColor: '#808', strokeOpacity: 0.75, strokeWeight: 3 }} />)
+   
+        this.setState({
+            isOpen: true
+        })
+
+ 
+    }
+
+    moveMarker = (marker, map, clickEvent) => {
+        const { latLng } = clickEvent;
+        const lat = latLng.lat();
+        const lng = latLng.lng();
+
+        this.tab[marker.id].lat = lat;
+        this.tab[marker.id].lng = lng;
+   
+        this.setState({
+             isOpen: true
+        })
+
+        console.log(lat,lng);
     }
 
     render() {
-        let rows = [];
-        let coord = []
-        for (let i = 0; i < this.mk.length; i++){
-            rows.push(<Marker draggable={true} id={i} title={this.mk[i].nom} position={{lat:this.mk[i].lat,lng:this.mk[i].lng} }  />);
-            coord.push(rows[i].props.position)}
-            console.log(coord)
+      
+    
+ 
+
         return (
             <Map
                 google={this.props.google}
@@ -58,23 +85,23 @@ export class GMaps extends Component {
                 onClick={this.mapClicked}
                 onRightclick={this.delete}
             >
-                {rows}
-                <Polyline
-                path={coord}
+            {/* <Polyline
+                path={this.state.lines}
                 geodesic={true}
                 options={{
-                    strokeColor: "#808",
+                    strokeColor: '#808',
                     strokeOpacity: 0.75,
                     strokeWeight: 3,
-        
                 }}
-                />
-              
+            /> */}
+                {this.rows}
+                {this.mkpoly}
+
             </Map>
         );
     }
 }
 
 export default GoogleApiWrapper({
-    apiKey : "AIzaSyA3Gsj08QzmXalEyHuuHgnzNKk4dGS6i84"
+    apiKey: "AIzaSyA3Gsj08QzmXalEyHuuHgnzNKk4dGS6i84"
 })(GMaps)

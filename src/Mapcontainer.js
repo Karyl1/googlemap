@@ -1,13 +1,11 @@
 import React, { Component } from "react";
-import {Map, InfoWindow, Polyline, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {Map, InfoWindow, Polyline, Marker, GoogleApiWrapper ,BicyclingLayer} from 'google-maps-react';
 import "./App.css";
 import MarkerConfig from "./MarkerConfig";
 import Export from './Export';
 import Import from './Import';
 
-
-
-
+import Itineraire from './itinéraire';
 
 
 export class Markeur {
@@ -44,6 +42,8 @@ export class MapContainer extends Component {
         this.mk = [];
 
         this.state = {
+
+            place: null,
             nbmk: 1,
             isOpen: false,
             Poly: true,
@@ -53,6 +53,8 @@ export class MapContainer extends Component {
             activeMarker: {},
             selectedPlace: {},
             Event: {},
+
+            
 
 
         };
@@ -72,9 +74,7 @@ update = () => {this.setState({nbmk:10})};
         var newlat = event.latLng.lat();
         var newlng = event.latLng.lng();
         var id= markeur.id;
-        console.log(newlng);
-        console.log(id);
-        console.log(this.mk[id]);
+
         this.mk[id].lng=newlng;
         this.mk[id].lat=newlat;
         this.setState({nmbk:this.mk.length});
@@ -110,12 +110,17 @@ update = () => {this.setState({nbmk:10})};
     handleMapClick(p1,p2,event) {
         var lat = event.latLng.lat();
         var lng = event.latLng.lng();
+        // fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyA3Gsj08QzmXalEyHuuHgnzNKk4dGS6i84`)
+        // .then(res => res.json())
+        // .then(data => {
+        //     console.log(data)
+        // })
         this.mk.push(new Markeur("point "+ this.mk.length,lat,lng));
         this.setState({nbmk:this.mk.length});
-        console.log(this.mk);
 
 
     }
+
     onMarkerClick = (props, marker, event) =>{
 
 
@@ -124,28 +129,19 @@ update = () => {this.setState({nbmk:10})};
             activeMarker: marker,
             Event: event,
             showingInfoWindow:true,
-
         });
-        console.log(this.state.Event)
 };
     FunctionTestAfficher = () => {
         if (this.mk.length > 1){
-            console.log(this.mk[0].lat);
             return this.mk[1].lat
-
         }
     };
 
-    SupprimerMarkeurActuel  =() => {
+    SupprimerMarkeurActuel = () =>{
 
-        console.log(this.mk[this.state.selectedPlace.id]);
         this.mk.splice(this.state.selectedPlace.id,1);
         this.setState({nbmk:this.mk.length})
-        this.setState({nbmk: this.mk.length, showingInfoWindow: false})
-
     };
-
-
 
     render() {
 
@@ -155,7 +151,10 @@ update = () => {this.setState({nbmk:10})};
         for (var i = 0; i< this.mk.length;i++){
             rows.push(
                 <Marker
-                id={i} name={this.mk[i].nom}
+                hoverDistance={20}
+                onightClick ={this.right}
+                id={i} 
+                name={this.mk[i].nom}
                 onClick={this.onMarkerClick}
                 draggable={true} onDragend={this.newDragend}
                 position={{lat: this.mk[i].lat,lng: this.mk[i].lng}}/>);
@@ -167,10 +166,11 @@ update = () => {this.setState({nbmk:10})};
         const polySelector = this.state.Poly ? poli : null;
 
 
-
-
         return (
             <div className="MAPP">
+                    <Itineraire 
+                point={rows}
+            />
 
                 <Map
                     style={style}
@@ -182,6 +182,8 @@ update = () => {this.setState({nbmk:10})};
                     onClick={this.handleMapClick.bind(this)}
 
                     disableDoubleClickZoom={true}
+                    onReady={this.fetchPlaces}
+             
                 >
                     {rows}
                     <Polyline
@@ -199,11 +201,14 @@ update = () => {this.setState({nbmk:10})};
                             <img src="https://www.girlizz.com/img_jeux/1912.jpg"/>
                         </div>
                     </InfoWindow>
-
+         
                 </Map>
+
 
                 <div className="sectiondroit">
                     <ul>
+
+                             <button onClick={this.anotherPosition}>Trouver le point </button>
                         <li><button onClick={this.deleteAll.bind(this)}>Supprimer tous les markeurs</button></li>
                         <br/>
                         <li><button onClick={this.delete.bind(this)}>Supprimer dernier markeur</button></li>
@@ -223,8 +228,6 @@ update = () => {this.setState({nbmk:10})};
                     <Import jsonLoad={this.mk} callback={this.update}/>
 
                 </div>
-
-
             </div>
 
         );
