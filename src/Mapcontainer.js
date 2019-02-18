@@ -56,7 +56,7 @@ export class MapContainer extends Component {
             showingInfoWindow: false,
             activeMarker: {},
             selectedPlace: 0,
-            
+            points: []
 
             
 
@@ -186,6 +186,15 @@ update = () => {this.setState({nbmk:10})};
         this.setState({nbmk: this.mk.length, showingInfoWindow: false, selectedPlace: 0})
 
     };
+    tracerItineraire = (points) => {
+        this.setState({
+            points: points.map(el => {
+                const lat = el[0]
+                const lng = el[1]
+                return { lat: lat , lng : lng}
+            })
+        })
+    }
 
     render() {
 
@@ -227,6 +236,7 @@ console.log(this)
         return (
             <div className="MAPP">
                     <Itineraire 
+                    tracerItin ={this.tracerItineraire}
                 point={rows}
             />
 
@@ -246,6 +256,10 @@ console.log(this)
                     {rows}
                     <Polyline
                     path={polySelector}
+                    strokeWeight={2}
+                    />
+                    <Polyline
+                    path={this.state.points}
                     strokeWeight={2}
                     />
 
