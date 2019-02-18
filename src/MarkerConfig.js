@@ -15,6 +15,7 @@ class MarkerConfig extends Component    {
     this.text = document.getElementById("inputxt").value
     this.img = document.getElementById("inputClick").value
     this.number = 1;
+    
 
 
     this.props.add(this.titre,this.text,this.img,this.number)
@@ -31,7 +32,7 @@ class MarkerConfig extends Component    {
                 
                 <div>
                     <ul>
-                        <h2>Titre</h2>
+                        <h2>Titre>></h2>
                         <li> <input placeholder="Votre titre..."    id="titre"/></li>
                         <br/>
                         <br/>   
@@ -41,7 +42,7 @@ class MarkerConfig extends Component    {
                         <h2>image (HTML)</h2>
                         <li><input placeholder="https://votre-image.exemple" id="inputClick"   type="text"/></li>
                        
-                        <input onClick={this.toto}  type="submit" value="Envoyer"/>
+                        <input onClick={this.toto}  type="submit"/>
                     </ul>
                 </div>
 
