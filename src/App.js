@@ -15,6 +15,7 @@ class App extends Component {
                 <MapContainer className="MAP"/>
 
             </div>
+            <div> <h1>test</h1></div>
 
             </div>
 
