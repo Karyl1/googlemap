@@ -1,14 +1,14 @@
 import React, { Component } from "react";
-import {Map, InfoWindow, Polyline, Marker, GoogleApiWrapper ,BicyclingLayer} from 'google-maps-react';
+import {Map, InfoWindow, Polyline, Marker, GoogleApiWrapper} from 'google-maps-react';
 import "./App.css";
+import Geox from './Geox';
 import MarkerConfig from "./MarkerConfig";
 import Export from './Export';
 import Import from './Import';
 import Image1 from './image1.png';
 import Image2 from './image2.png'
 import Image3 from './Image3.png'
-
-import Itineraire from './itinéraire';
+import Image4 from './Icone4.png'
 
 
 export class Markeur {
@@ -22,9 +22,7 @@ export class Markeur {
         this.texte="";
         this.img="";
         this.icon=Image2;
-        this.important= 0;
-
-
+        this.important=0;
     }
 }
 
@@ -32,37 +30,26 @@ export class Markeur {
 const style = {
     width: '75%',
     height: '75%',
-
 };
 
 
 export class MapContainer extends Component {
-
-
-
-
-
     constructor(props) {
         super(props);
-        this.mk = [];
+        this.geox = new Geox();
 
         this.state = {
-
-            place: null,
             nbmk: 1,
             isOpen: false,
-            Poly: true,
+            Poly: false,
             on: props.on,
             showingInfoWindow: false,
             activeMarker: {},
             selectedPlace: 0,
-            points: []
-
-            
-
-
+            Vtt:false
         };
         this.button = this.state.on ? "none" : "block";
+        
 
 
     }
@@ -72,174 +59,183 @@ export class MapContainer extends Component {
 
 update = () => {this.setState({nbmk:10})};
 
-/** Function qui permet de d'actualiser la polyline du markeur  */
+/** Fonction qui permet de d'actualiser la polyline du markeur */
     newDragend = (markeur,p2,event) =>{
-
         var newlat = event.latLng.lat();
         var newlng = event.latLng.lng();
         var id= markeur.id;
 
-        this.mk[id].lng=newlng;
-        this.mk[id].lat=newlat;
-
-        this.setState({nmbk:this.mk.length,showingInfoWindow:false});
-        
+        this.geox.mk[id].lng=newlng;
+        this.geox.mk[id].lat=newlat;
+        this.setState({nmbk:this.geox.mk.length,showingInfoWindow:false});
     };
 
-    affichage =(markeur,p2,event) => {
+    affichage = (markeur,p2,event) => {
     this.setState({on:!this.state.on})
-
     };
+
 
     ElementDiv = (titre,text,img,number) => {
-        if((this.mk.length > 0)&&(this.state.selectedPlace !== 0)){ /**   if((this.mk.length > 0)&&(this.state.selectedPlace !== 0)){ */
-        console.log(this.mk);
-        this.mk[this.state.selectedPlace.id].titre = titre;
-        this.mk[this.state.selectedPlace.id].text = text;
+        if((this.geox.mk.length > 0)&&(this.state.selectedPlace !== 0)){
 
-        console.log(titre);
-        console.log(text);
-        console.log(img);
-        console.log(number);
-        this.mk[this.state.selectedPlace.id].icon = Image1
-        this.mk[this.state.selectedPlace.id].important = 1;
-        this.mk[this.state.selectedPlace.id].img = img
-        this.setState({nmbk:this.mk.length});
+        this.geox.mk[this.state.selectedPlace.id].titre = titre;
+        this.geox.mk[this.state.selectedPlace.id].texte = text;
+        this.geox.mk[this.state.selectedPlace.id].icon = Image1
+        this.geox.mk[this.state.selectedPlace.id].important = 1;
+        this.geox.mk[this.state.selectedPlace.id].img = img
+        this.setState({nmbk:this.geox.mk.length});
         }
-        
     
     }
 
+  
 
 
     change () {
-        this.setState({Poly:!this.state.Poly})
+      
+        if(this.state.Poly === false){
+            this.setState({Poly:true})
+        }else{
+            this.setState({Poly:false})
+        } 
     }
+
+    Modevtt = () => {
+        if(this.state.Vtt === false){
+            for(var i=0;i<this.geox.mk.length;i++){
+                if (!((i=== 0)||(i=== this.geox.mk.length - 1)||(this.geox.mk[i].important === 1))){
+                        this.geox.mk[i].icon = Image4
+                }
+            }
+            this.setState({Vtt: true});
+            console.log(this.state.Modevtt)
+        }if(this.state.Vtt === true){
+            for(let i=0;i<this.geox.mk.length;i++){       
+                if(this.geox.mk[i].important === 1){
+                    this.geox.mk[i].icon = Image1            /** << Permet quand on appuis sur un markeur de donner l'image de base  */
+                }else{
+                    this.geox.mk[i].icon = Image2}       
+            
+        } this.setState({Vtt: false});
+        
+    }
+
+    }
+
+    
 
     /** permet de supprimer un markeur depuis le bouton **/
     delete () {
-        this.mk.pop();
-        this.setState({nbmk:this.mk.length})
-        this.setState({nbmk: this.mk.length, showingInfoWindow: false,selectedPlace: 0})
+        this.geox.mk.pop();
+        this.setState({nbmk:this.geox.mk.length})
+        this.setState({nbmk: this.geox.mk.length, showingInfoWindow: false,selectedPlace: 0})
     }
 /** permet de supprimer tous les markeurs depuis le bouton **/
     deleteAll () {
 
-        this.mk.splice(0, this.mk.length);
-        this.setState({nbmk: this.mk.length, showingInfoWindow: false, selectedPlace: 0})
-
+        this.geox.mk.splice(0, this.geox.mk.length);
+        this.setState({nbmk: this.geox.mk.length, showingInfoWindow: false, selectedPlace: 0})
     }
-
-
 
 /** permet d'ajouter un markeur sur la map en appuyant sur click gauche**/
     handleMapClick(p1,p2,event) {
+        this.setState({Vtt: false})
+        this.Modevtt()
+
         var lat = event.latLng.lat();
         var lng = event.latLng.lng();
-        // fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyA3Gsj08QzmXalEyHuuHgnzNKk4dGS6i84`)
-        // .then(res => res.json())
-        // .then(data => {
-        //     console.log(data)
-        // })
-        this.mk.push(new Markeur("point "+ this.mk.length,lat,lng));
-        this.setState({nbmk:this.mk.length});
-
-
+        this.geox.mk.push(new Markeur("point "+ this.geox.mk.length,lat,lng));
+        this.setState({nbmk:this.geox.mk.length});
+        console.log(this.geox.mk);
     }
-
     onMarkerClick = (props, marker, event) =>{
-        for(let i=0;i<this.mk.length;i++){       
-            if(this.mk[i].important === 1){
-                this.mk[i].icon = Image1            /** << Permet quand on appuis sur un markeur de donner l'image de base  */
-            }else{
-                this.mk[i].icon = Image2
+        for(let i=0;i<this.geox.mk.length;i++){       
+            if(this.geox.mk[i].important === 1){
+                this.geox.mk[i].icon = Image1    }        /** << Permet quand on appuis sur un markeur de donner l'image de base  */
+            if((this.geox.mk[i].icon !== Image4)&&(this.geox.mk[i].important !== 1)){
+                this.geox.mk[i].icon = Image2
             }
             
         }
-        if( this.mk[props.id].important === 0){
-            this.mk[props.id].icon = Image3
+    
+        this.setState({nmbk:this.geox.mk.length});
+        if( this.geox.mk[props.id].important === 0){
+            this.geox.mk[props.id].icon = Image3
         }
-        
+
         this.setState({
             selectedPlace: props,
             activeMarker: marker,
             Event: event,
             });
-        if(this.mk[props.id].important === 1){
+            /** faire condition avec texte != "" et les autres !!!<< */
+        if((this.geox.mk[props.id].important === 1)&&(this.geox.mk[props.id].texte !== "")){
             this.setState({showingInfoWindow:true})
-        }else {
+        } else {
             this.setState({showingInfoWindow:false})
         }
-               
-        console.log(this.state.Event)
 };
     FunctionTestAfficher = () => {
-        if (this.mk.length > 1){
-            return this.mk[1].lat
+        if (this.geox.mk.length > 1){
+            console.log(this.geox.mk[0].lat);
+            return this.geox.mk[1].lat
         }
     };
 
-    SupprimerMarkeurActuel = () =>{
+    SupprimerMarkeurActuel = () => {
 
-        this.mk.splice(this.state.selectedPlace.id,1);
+        console.log(this.geox.mk[this.state.selectedPlace.id]);
+        this.geox.mk.splice(this.state.selectedPlace.id,1);
     
-        this.setState({nbmk: this.mk.length, showingInfoWindow: false, selectedPlace: 0})
-
+        this.setState({nbmk: this.geox.mk.length, showingInfoWindow: false, selectedPlace: 0})
     };
-    tracerItineraire = (points) => {
-        this.setState({
-            points: points.map(el => {
-                const lat = el[0]
-                const lng = el[1]
-                return { lat: lat , lng : lng}
-            })
-        })
-    }
+
+
 
     render() {
 
-        this.icon = Image1
-        let  rows = [];
-        let  poli = [];
-        let  info="";
+        let icon=Image2
+        let rows = [];
+        let poli = [];
+        let info="";
 
-        for (var i = 0; i< this.mk.length;i++){
+        for (var i = 0; i< this.geox.mk.length;i++){
+            if (this.geox.mk[i].important === 0){
+                icon = Image2;
+            } else {
+                icon = Image1;
+            }
             rows.push(
                 <Marker
-                hoverDistance={20}
-                onightClick ={this.right}
-                id={i} 
-                name={this.mk[i].nom}
+                id={i} name={this.geox.mk[i].nom}
                 onClick={this.onMarkerClick}
                 draggable={true} onDragend={this.newDragend}
-                position={{lat: this.mk[i].lat,lng: this.mk[i].lng}}
-                icon= {this.mk[i].icon}
+                position={{lat: this.geox.mk[i].lat,lng: this.geox.mk[i].lng}}
+                icon= {this.geox.mk[i].icon}
                 />);
-    
-
 
             poli.push(rows[i].props.position)
       }
-console.log(this)
-      if((this.mk.length > 0)&&(this.state.selectedPlace !== 0)){
+     
+
+      if((this.geox.mk.length > 0)&&(this.state.selectedPlace !== 0)){
           
           info= <div className="MarkeurInfo">
-          <h2 className="Scarlet">{this.mk[this.state.selectedPlace.id].titre}</h2>
-          <p>{this.mk[this.state.selectedPlace.id].text}</p>
-          <img className="imgdiv" src={this.mk[this.state.selectedPlace.id].img}/>
+          <h2>{this.geox.mk[this.state.selectedPlace.id].titre}</h2>
+          <p>{this.geox.mk[this.state.selectedPlace.id].texte}</p>
+          <img className="imgdiv" src={this.geox.mk[this.state.selectedPlace.id].img} alt=""/>
       </div>
       }
        
         const polySelector = this.state.Poly ? poli : null;
 
 
+
+
         return (
             <div className="MAPP">
-                    <Itineraire 
-                    tracerItin ={this.tracerItineraire}
-                point={rows}
-            />
-
+                <button  className="boutonMarker" onClick={this.Modevtt}>Mode VTT {this.state.Vtt ? " Désactiver": " Activer"}</button>
+                <div className="mapSize">
                 <Map
                     style={style}
                     google={this.props.google}
@@ -250,54 +246,45 @@ console.log(this)
                     onClick={this.handleMapClick.bind(this)}
 
                     disableDoubleClickZoom={true}
-                    onReady={this.fetchPlaces}
-             
                 >
                     {rows}
                     <Polyline
                     path={polySelector}
                     strokeWeight={2}
                     />
-                    <Polyline
-                    path={this.state.points}
-                    strokeWeight={2}
-                    />
 
                     <InfoWindow
-                        onOpen={this.windowHasOpened}
-                        onClose={this.windowHasClosed}
                         marker={this.state.activeMarker}
-                        visible={this.state.showingInfoWindow}>
+                        visible={this.state.showingInfoWindow}
+                        >
                         {info}
-                        
                     </InfoWindow>
-         
-                </Map>
 
-
-                <div className="sectiondroit">
+                    </Map>
+                    </div>
+                    <div className="sectiondroit">
                     <ul className="ulmap">
-                        <li><button onClick={this.deleteAll.bind(this)}>Supprimer tous les markeurs</button></li>
+                        <li><button  className="boutonMarker" onClick={this.deleteAll.bind(this)}>Supprimer tous les markeurs</button></li>
                         <br/>
-                        <li><button onClick={this.delete.bind(this)}>Supprimer dernier markeur</button></li>
+                        <li><button  className="boutonMarker" onClick={this.delete.bind(this)}>Supprimer le dernier markeur</button></li>
                         <br/>
-                        <li><button onClick={this.change.bind(this)}>Tracer:{this.state.Poly ? " Désactiver": " Activer"}</button></li>
+                        <li><button   className="boutonMarker" onClick={this.change.bind(this)}>{this.state.Poly ? " Désactiver": " Activer"} le tracer</button></li>
                     </ul>
                     <div>
                     <MarkerConfig
                         laat={this.state.selectedPlace.id}
                         delete={this.SupprimerMarkeurActuel}
                         add={this.ElementDiv}
-                        Markeur={this.mk[this.state.selectedPlace.id]}
-
+                        Markeur={this.geox.mk[this.state.selectedPlace.id]}
                     />
                     </div>
-                </div>
-                <div className="sectionbas">
-                    <Export jsonSave={this.mk}/>
-                    <Import jsonLoad={this.mk} callback={this.update}/>
+                    </div>
+                    <div className="sectionbas">
+                        <Export jsonSave={this.geox.mk}/>
+                        <Import jsonLoad={this.geox.mk} callback={this.update}/>
+                    </div>
 
-                </div>
+
             </div>
 
         );

@@ -8,14 +8,13 @@ class App extends Component {
     return (
 <div>
             <div>
-                <h1 className="TitrePage">GEOX LA MAP QUI RESPIRE</h1>
+                <h1 className="TitrePage">AtlasMap</h1>
 
 
             <div className="Page">
                 <MapContainer className="MAP"/>
 
             </div>
-            <div> <h1>test</h1></div>
 
             </div>
 
