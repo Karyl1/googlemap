@@ -57,7 +57,11 @@ export class MapContainer extends Component {
 
 /** Fonction serveur import - export **/
 
-update = () => {this.setState({nbmk:10})};
+update = () => {
+    
+    
+    this.setState({nbmk:10})};
+
 
 /** Fonction qui permet de d'actualiser la polyline du markeur */
     newDragend = (markeur,p2,event) =>{

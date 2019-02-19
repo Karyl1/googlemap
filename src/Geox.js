@@ -4,4 +4,4 @@ class Geox {
     }
 }
 
-export default Geox;
+export default Geox; 
