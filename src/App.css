@@ -1,41 +1,22 @@
 .App {
   text-align: center;
 }
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+body{
+  background: url("https://images.pexels.com/photos/361104/pexels-photo-361104.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")no-repeat;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.cul{
+  font-size: 50px;
+  color: orangered;
 }
-.export{
-  position: relative;
-  top: 3%;
-  width: 7%;
+.cul1{
+  font-size: 50px;
+  color: orchid;
 }
-.import{
-  position: relative;
-  width: 7%;
+a.active{
+  color: red;
 }
-.liste{
-  position: relative;
-  width: 7%;
-}
-
-h1{
-  color: blue;
-}
-.App-link {
-  color: #61dafb;
+a{
+  margin-left: 20px;
 }
 
 @keyframes App-logo-spin {
@@ -45,4 +26,143 @@ h1{
   to {
     transform: rotate(360deg);
   }
+}
+
+/** CSS MAP **/
+li{
+ list-style-type: none;
+}
+h2{
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.sectiondroit{
+  position: absolute;
+  right: 0%;
+  height: 85%;
+  background: rgb(253, 232, 193);
+  width: 25%;
+  border: 1px solid orange;
+  border-radius: 0px 10px 10px 0px;
+  opacity: 1;
+
+}
+.TitrePage {
+  text-align: center;
+  margin: 10px;
+  font-size: 3em;
+  color: white;
+  font-family: Arial;
+  text-decoration: underline;
+  text-shadow: 3px 3px 2px black;
+}
+/* .mapSize{
+  position: absolute;
+  width: 75%;
+  height: 75%;
+} */
+.sectionRelative{
+  position: absolute;
+  right: 0%;
+  display: flex;
+  flex-direction: row-reverse;
+  right: 25%;
+  z-index: 3;
+}
+.export{
+  font-weight: bold;
+  background: rgb(90, 192, 90);
+  color: white;
+  width: 175px;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  margin: 3px;
+}
+.import{
+  font-weight: bold;
+  width: 100px;
+  background: rgb(96, 223, 255);
+  color: white;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  margin: 3px;
+}
+.Page{
+  margin-top: 5%;
+}
+
+#inputxt{
+  height: 130px;
+}
+
+.MarkerConfig{
+  width: 100%;
+  height: 100%;
+  background-color: grey;
+  text-align: center;
+  background: rgb(253, 232, 193);
+  border-top: 1px solid orange;
+  border-bottom: 1px solid orange;
+}
+.imgdiv{
+  width: 200px;
+  max-width: 200px;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* 
+.buttondelete{
+  margin-left: 20px;
+} */
+
+.ulButton{
+  width: 250px;
+  font-size: 0.95em;
+  height: 30px;
+  border: none;
+  border-radius: 10px;
+  margin: 18px;
+}
+.delAllButton{
+  background: rgb(172, 29, 4);
+  color: white;
+}
+.delButton{
+  background: rgb(172, 29, 4);
+  color: white;
+}
+.tracerButton{
+  background: rgb(1, 56, 175); 
+  color: white;
+}
+.delThisButton{
+  Background: rgb(172, 29, 4);
+  color: white;
+  width: 180px;
+  font-size: 0.95em;
+  height: 30px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 15px;
+}
+.ulDroit{
+  text-align: center;
+  padding: 0;
+  margin: 5px;
+}
+.formText{
+  margin: 15px;
+}
+.formButton{
+  width: 150px;
+  height: 30px;
+  color: white;
+  background: rgb(1, 56, 175); 
+  font-size: 0.95em;
+  border: none;
+  border-radius: 10px;
+  margin: 18px;
 }

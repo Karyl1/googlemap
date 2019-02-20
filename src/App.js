@@ -1,15 +1,27 @@
-import React, {Component} from 'react';
-import GoogleApiWrappe from './Map';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+import MapContainer from "./Mapcontainer";
+
 
 class App extends Component {
-  render(){
+  render() {
     return (
-      <div>
-      <GoogleApiWrappe />
-        <h1>test</h1>
-      </div>
-    )
+<div>
+            <div>
+                <h1 className="TitrePage">AtlasMap</h1>
+
+
+            <div className="Page">
+                <MapContainer className="MAP"/>
+
+            </div>
+
+            </div>
+
+  </div>
+
+
+    );
   }
 }
 
