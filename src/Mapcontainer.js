@@ -9,6 +9,7 @@ import Image1 from './image1.png';
 import Image2 from './image2.png'
 import Image3 from './Image3.png'
 import Image4 from './Icone4.png'
+import Itineraire from './itinéraire';
 
 
 export class Markeur {
@@ -39,6 +40,7 @@ export class MapContainer extends Component {
         this.geox = new Geox();
 
         this.state = {
+            points: [],
             nbmk: 1,
             isOpen: false,
             Poly: false,
@@ -178,6 +180,8 @@ update = () => {
         } else {
             this.setState({showingInfoWindow:false})
         }
+
+        console.log(this.geox.mk[this.state.activeMarker.id])
 };
     FunctionTestAfficher = () => {
         if (this.geox.mk.length > 1){
@@ -194,7 +198,20 @@ update = () => {
         this.setState({nbmk: this.geox.mk.length, showingInfoWindow: false, selectedPlace: 0})
     };
 
+    tracerItineraire = (points) => {
 
+        this.setState({
+            points : points.map((el, index) => {
+                const lat = el[0]
+                const lng = el[1]
+
+                this.geox.mk.push(new Markeur("point "+ this.geox.mk.length,lat,lng))
+
+                return { lat: lat , lng : lng,}
+            })
+        })
+ 
+    }
 
     render() {
 
@@ -240,6 +257,10 @@ update = () => {
             <div className="MAPP">
                 <button  className="boutonMarker" onClick={this.Modevtt}>Mode VTT {this.state.Vtt ? " Désactiver": " Activer"}</button>
                 <div className="mapSize">
+                <Itineraire 
+                    tracerItin ={this.tracerItineraire}
+                    point={this.geox.mk}
+                />
                 <Map
                     style={style}
                     google={this.props.google}
