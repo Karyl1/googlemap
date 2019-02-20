@@ -21,17 +21,16 @@ export default class Itineraire extends React.Component{
     getPosition = (e) => {
         e.preventDefault()
  
-        const marker = this.props.point
-        console.log(marker, 'mk')
-        if (marker.length >= 1){
-            
-            const lat= marker[0].lat
-            const lng= marker[0].lng
+        const origin = this.props.origin
+        const destination = this.props.destination
 
-            const latO = marker[marker.length - 1].lat
-            const lngO = marker[marker.length - 1].lng
+            const latO= origin.position.lat
+            const lngO= origin.position.lng
 
-            fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${latO},${lngO}&destination=${lat},${lng}&key=${apiKey}&mode=${this.state.selected}`)
+            const latD = destination.position.lat
+            const lngD = destination.position.lng
+
+            fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${latO},${lngO}&destination=${latD},${lngD}&key=${apiKey}&mode=${this.state.selected}`)
             .then(res => res.json())
             .then(data => {
   
@@ -45,7 +44,6 @@ export default class Itineraire extends React.Component{
 
             })
 
-        }
   
    
     }

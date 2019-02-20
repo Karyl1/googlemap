@@ -40,6 +40,8 @@ export class MapContainer extends Component {
         this.geox = new Geox();
 
         this.state = {
+            origin: null,
+            destination: null,
             points: [],
             nbmk: 1,
             isOpen: false,
@@ -124,7 +126,7 @@ update = () => {
             
         } this.setState({Vtt: false});
         
-    }
+        }
 
     }
 
@@ -163,7 +165,7 @@ update = () => {
             }
             
         }
-    
+        console.log(props)
         this.setState({nmbk:this.geox.mk.length});
         if( this.geox.mk[props.id].important === 0){
             this.geox.mk[props.id].icon = Image3
@@ -173,7 +175,17 @@ update = () => {
             selectedPlace: props,
             activeMarker: marker,
             Event: event,
+           
             });
+        if (this.state.origin === null){
+            this.setState({
+                origin: props,
+            })
+        }else{
+            this.setState({
+                destination: props
+            })
+        }
             /** faire condition avec texte != "" et les autres !!!<< */
         if((this.geox.mk[props.id].important === 1)&&(this.geox.mk[props.id].texte !== "")){
             this.setState({showingInfoWindow:true})
@@ -199,7 +211,10 @@ update = () => {
     };
 
     tracerItineraire = (points) => {
-
+        // let poits = points;
+        // // reùmplir tableau
+        // points.push (new Markeur());
+        // return points;
         this.setState({
             points : points.map((el, index) => {
                 const lat = el[0]
@@ -208,9 +223,11 @@ update = () => {
                 this.geox.mk.push(new Markeur("point "+ this.geox.mk.length,lat,lng))
 
                 return { lat: lat , lng : lng,}
-            })
+            }),
+            origin: null,
+            destination: null,
         })
- 
+        // this.geox.mk.slice(1,2) 
     }
 
     render() {
@@ -234,7 +251,7 @@ update = () => {
                 position={{lat: this.geox.mk[i].lat,lng: this.geox.mk[i].lng}}
                 icon= {this.geox.mk[i].icon}
                 />);
-
+            
             poli.push(rows[i].props.position)
       }
      
@@ -259,7 +276,8 @@ update = () => {
                 <div className="mapSize">
                 <Itineraire 
                     tracerItin ={this.tracerItineraire}
-                    point={this.geox.mk}
+                    origin={this.state.origin}
+                    destination= {this.state.destination}
                 />
                 <Map
                     style={style}
