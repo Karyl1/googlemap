@@ -10,7 +10,6 @@ import Image2 from './image2.png'
 import Image3 from './Image3.png'
 import Image4 from './Icone4.png'
 import Itineraire from './itinéraire';
-import logoDel from './img/Icone4.png';
 
 export class Markeur {
 
