@@ -57,9 +57,13 @@ export default class Itineraire extends React.Component{
     render(){
 
         return(
+            
             <div>
-               
-                <h1 style={{color: 'white'}}> la Distance entre ces deux points est de {this.state.distance} </h1>
+                <div className="backgroundDistance"></div>
+            <div className="h3Distance">
+                <h3> La distance entre ces deux points est de : {this.state.distance} </h3>
+                </div>
+                <div className="inputDistance">
                 <form onChange={this.getPosition} onSubmit={this.getPosition}>
                     <label>
                     <input type='radio' id='driving' name='driving' value='driving'
@@ -82,7 +86,7 @@ export default class Itineraire extends React.Component{
                     <button >test new position</button>
   
                 </form>
-     
+                </div>
             </div>
         )
     }

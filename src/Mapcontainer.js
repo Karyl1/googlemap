@@ -29,9 +29,9 @@ export class Markeur {
 
 
 const style = {
-    width: '75%',
-    height: '85%',
-    position: 'relative',
+    // width: '75%',
+    // height: '85%',
+    // position: 'relative',
     border: '1px solid orange'
 };
 
@@ -274,7 +274,6 @@ update = () => {
 
         return (
             <div className="MAPP">
-                <button  className="boutonMarker" onClick={this.Modevtt}>Mode VTT {this.state.Vtt ? " Désactiver": " Activer"}</button>
                 <div className="mapSize">
                 <Itineraire 
                     tracerItin ={this.tracerItineraire}
@@ -309,11 +308,13 @@ update = () => {
                     </div>
                     <div className="sectiondroit">
                     <ul className="ulDroit">
-                        <li><button className="ulButton delAllButton" onClick={this.deleteAll.bind(this)}>🚫 Supprimer tous les marqueurs</button></li>
+                        <li><button className="ulButton delAllButton" onClick={this.deleteAll.bind(this)}>Supprimer tous les marqueurs</button></li>
 
-                        <li><button className="ulButton delButton" onClick={this.delete.bind(this)}>❌ Supprimer le dernier marqueur</button></li>
+                        <li><button className="ulButton delButton" onClick={this.delete.bind(this)}>Supprimer le dernier marqueur</button></li>
 
                         <li><button className="ulButton tracerButton" onClick={this.change.bind(this)}>{this.state.Poly ? " Désactiver": " Activer"} le tracé</button></li>
+                    
+                        <li><button  className="ulButton vttButton" onClick={this.Modevtt}>Mode VTT {this.state.Vtt ? " Désactivé": " Activé"}</button></li>
                     </ul>
                     <div>
                     <MarkerConfig
