@@ -180,13 +180,26 @@ update = () => {
             });
         if (this.state.origin === null){
             this.setState({
-                origin: props,
+                origin: props
             })
         }else{
             this.setState({
                 destination: props
             })
         }
+        let un = this.state.origin
+        let unn = this.state.destination
+        
+        if((this.state.destination !== null)&&(this.state.origin !== null)&&(this.state.destination.id < this.state.origin.id)){
+            
+            console.log('la fonction marche')
+            this.setState({origin:unn,destination:un})
+        }
+       /* console.log('un après function')
+        console.log(un)
+        console.log('deux')
+        console.log(unn)/ 
+    
             /** faire condition avec texte != "" et les autres !!!<< */
         if((this.geox.mk[props.id].important === 1)&&(this.geox.mk[props.id].texte !== "")){
             this.setState({showingInfoWindow:true})
@@ -194,7 +207,7 @@ update = () => {
             this.setState({showingInfoWindow:false})
         }
 
-        console.log(this.geox.mk[this.state.activeMarker.id])
+        
 };
     FunctionTestAfficher = () => {
         if (this.geox.mk.length > 1){
@@ -212,22 +225,41 @@ update = () => {
     };
 
     tracerItineraire = (points) => {
-        // let poits = points;
-        // // reùmplir tableau
-        // points.push (new Markeur());
-        // return points;
-        this.setState({
-            points : points.map((el, index) => {
-                const lat = el[0]
-                const lng = el[1]
-
-                this.geox.mk.push(new Markeur("point "+ this.geox.mk.length,lat,lng))
-
-                return { lat: lat , lng : lng,}
-            }),
-            origin: null,
-            destination: null,
+        
+        let result = []
+        let deux = []
+        let test = []
+        let un = []
+        let cy = []
+        
+       
+        un = this.geox.mk.slice(0,this.state.origin.id + 1)
+        deux = this.geox.mk.slice(this.state.destination.id,this.geox.mk.length)
+        cy = points.map((el, index) => {
+            const lat = el[0]
+            const lng = el[1]
+    
+            test.push(new Markeur("generate "+ this.geox.mk.length,lat,lng))
+    
+            return test
+    
         })
+
+             console.log(un)
+             console.log(deux)
+             console.log(cy)
+             result = result.concat(un)
+             result = result.concat(test)
+             result = result.concat(deux)
+
+        
+
+        
+        
+
+        this.geox.mk = result
+        console.log(this.geox.mk)
+        this.setState({origin: null,destination: null,})
         // this.geox.mk.slice(1,2) 
     }
 
