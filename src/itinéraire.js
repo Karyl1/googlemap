@@ -24,6 +24,7 @@ export default class Itineraire extends React.Component{
         const origin = this.props.origin
         const destination = this.props.destination
 
+            if (origin !== null && destination !== null) {
             const latO= origin.position.lat
             const lngO= origin.position.lng
 
@@ -44,7 +45,7 @@ export default class Itineraire extends React.Component{
 
             })
 
-  
+        }
    
     }
 
