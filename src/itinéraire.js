@@ -49,45 +49,32 @@ export default class Itineraire extends React.Component{
    
     }
 
-    test = () => {
-        this.state({selected:'bycycling'}) 
-        this.position()
-    }
-
-
     render(){
 
         return(
             
             <div>
-                <div className="backgroundDistance"></div>
-            <div className="h3Distance">
-                <h3> La distance entre ces deux points est de : {this.state.distance} </h3>
-                </div>
-                <div className="inputDistance">
-                <form onChange={this.getPosition} onSubmit={this.getPosition}>
+                <div className="backgroundDistance">
+                <p> La distance entre ces deux points est de : {this.state.distance}  </p>
+                <form  >
+                    <button onClick={this.getPosition} className="buttonDistance">Nouvel itinéraire</button>
                     <label>
                     <input type='radio' id='driving' name='driving' value='driving'
                 checked={this.state.selected === 'driving'} onChange={(e) => 
-                this.setState({ selected: e.target.value })
-                
-                } />
-                        driving
-                    </label>
+                this.setState({ selected: e.target.value })} />Voiture</label>
                     <label>
                     <input type='radio' id='walking' name='myRadio' value='walking' 
                      checked={this.state.selected === 'walking'} onChange={(e) => this.setState({ selected: e.target.value })} />
-                        walking
+                        À pied
                     </label>
                     <label>
-                    <input type='radio' id='bycycling' name='myRadio' value='bycycling' 
-                checked={this.state.selected === 'bycycling'} onChange={(e) => this.setState({ selected: e.target.value })} />
-                        Bicycling
+                    <input type='radio' id='bicycling' name='myRadio' value='bicycling' 
+                checked={this.state.selected === 'bicycling'} onChange={(e) => this.setState({ selected: e.target.value })} />
+                        À vélo
                     </label>
-                    <button >test new position</button>
   
                 </form>
-                </div>
+            </div>
             </div>
         )
     }

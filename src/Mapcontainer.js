@@ -338,7 +338,7 @@ update = () => {
                     </Map>
                     </div>
                     <div className="sectiondroit">
-                    <ul className="ulDroit">
+                    <ul className="ulDroit" id="scroll_down">
                         <li><button className="ulButton delAllButton" onClick={this.deleteAll.bind(this)}>Supprimer tous les marqueurs</button></li>
 
                         <li><button className="ulButton delButton" onClick={this.delete.bind(this)}>Supprimer le dernier marqueur</button></li>
