@@ -258,6 +258,7 @@ update = () => {
         deux = this.geox.mk.slice(this.state.destination.id,this.geox.mk.length)
 
         let markerLess = 0
+        let point = this.geox.mk.length
 
         cy = points.map((el, index) => {
             console.log(el, 'map')
@@ -267,8 +268,8 @@ update = () => {
                 const lat = el[0]
                 const lng = el[1]
         
-                test.push(new Markeur("generate "+ this.geox.mk.length,lat,lng,))
-        
+                test.push(new Markeur("generate "+ point,lat,lng,))
+                point ++
                 return test
             }else {
                 markerLess ++
@@ -288,7 +289,7 @@ update = () => {
         this.geox.mk = result
         console.log(this.geox.mk)
         this.setState({origin: null,destination: null,})
-        // this.geox.mk.slice(1,2) 
+
     }
 
     render() {
