@@ -25,20 +25,17 @@ class MarkerConfig extends Component    {
 /**<li><input placeholder="https://votre-image.exemple" value={this.state.img} onChange={i => this.setState({img: i.target.value})}  */
         return (
             <div className="MarkerConfig">
-                <button className="boutonMarker" onClick={this.props.delete}>Supprimer ce markeur</button>
+                <button className="delThisButton" onClick={this.props.delete}>Supprimer ce marqueur</button>
                 <div>
-                    <ul>
+                    <ul className="ulDroit">
                         
-                        <li> <input placeholder="Votre titre..."    id="titre"/></li>
-                        <br/>
-                        <br/>   
+                        <li className="formTitre">Ajouter un titre :<br /><input className="formText" placeholder="Votre titre..." id="titre"/></li>
                         
-                        <li><textarea placeholder="Votre texte..."    id="inputxt"></textarea></li>
-                        <br/>
+                        <li className="formTitre">Ajouter un texte :<br /><textarea className="formText" placeholder="Votre texte..." id="inputxt"></textarea></li>
                         
-                        <li><input placeholder="https://votre-image.exemple" id="inputClick"   type="text"/></li>
+                        <li className="formTitre">Ajouter une image (https):<br /><input className="formText" placeholder="https://votre-image.exemple/" id="inputClick" type="text"/></li>
                        
-                        <input onClick={this.toto}  type="submit" value="Envoyer"/>
+                        <input className="formButton" onClick={this.toto} type="submit" value="Envoyer"/>
                     </ul>
                 </div>
 

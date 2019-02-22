@@ -11,7 +11,6 @@ import Image3 from './Image3.png'
 import Image4 from './Icone4.png'
 import Itineraire from './itinéraire';
 
-
 export class Markeur {
 
     constructor(nom,lat,lng){
@@ -29,8 +28,10 @@ export class Markeur {
 
 
 const style = {
-    width: '75%',
-    height: '75%',
+    // width: '75%',
+    // height: '85%',
+    // position: 'relative',
+    border: '1px solid orange'
 };
 
 
@@ -84,6 +85,7 @@ update = () => {
 
 
     ElementDiv = (titre,text,img,number) => {
+        if((titre !== "")||(text !== "")||(img!=="")){
         if((this.geox.mk.length > 0)&&(this.state.selectedPlace !== 0)){
 
         this.geox.mk[this.state.selectedPlace.id].titre = titre;
@@ -93,7 +95,7 @@ update = () => {
         this.geox.mk[this.state.selectedPlace.id].img = img
         this.setState({nmbk:this.geox.mk.length});
         }
-    
+    }
     }
 
   
@@ -109,14 +111,18 @@ update = () => {
     }
 
     Modevtt = () => {
+        if(this.state.Poly === false){
+            this.setState({Poly:true})
+        }
         if(this.state.Vtt === false){
+
             for(var i=0;i<this.geox.mk.length;i++){
                 if (!((i=== 0)||(i=== this.geox.mk.length - 1)||(this.geox.mk[i].important === 1))){
                         this.geox.mk[i].icon = Image4
                 }
             }
             this.setState({Vtt: true});
-            console.log(this.state.Modevtt)
+
         }if(this.state.Vtt === true){
             for(let i=0;i<this.geox.mk.length;i++){       
                 if(this.geox.mk[i].important === 1){
@@ -135,20 +141,30 @@ update = () => {
     /** permet de supprimer un markeur depuis le bouton **/
     delete () {
         this.geox.mk.pop();
-        this.setState({nbmk:this.geox.mk.length})
-        this.setState({nbmk: this.geox.mk.length, showingInfoWindow: false,selectedPlace: 0})
+        
+        this.setState({
+            nbmk: this.geox.mk.length, 
+            showingInfoWindow: false,
+            selectedPlace: 0,
+            origin:null,
+            destination:null})
     }
 /** permet de supprimer tous les markeurs depuis le bouton **/
     deleteAll () {
 
         this.geox.mk.splice(0, this.geox.mk.length);
-        this.setState({nbmk: this.geox.mk.length, showingInfoWindow: false, selectedPlace: 0})
+        this.setState({nbmk: this.geox.mk.length, 
+            showingInfoWindow: false, 
+            selectedPlace: 0,
+            origin:null,
+            destination:null,
+        })
     }
 
 /** permet d'ajouter un markeur sur la map en appuyant sur click gauche**/
     handleMapClick(p1,p2,event) {
         this.setState({Vtt: false})
-        this.Modevtt()
+        
 
         var lat = event.latLng.lat();
         var lng = event.latLng.lng();
@@ -165,7 +181,6 @@ update = () => {
             }
             
         }
-        console.log(props)
         this.setState({nmbk:this.geox.mk.length});
         if( this.geox.mk[props.id].important === 0){
             this.geox.mk[props.id].icon = Image3
@@ -179,13 +194,28 @@ update = () => {
             });
         if (this.state.origin === null){
             this.setState({
-                origin: props,
+                origin: props
             })
         }else{
-            this.setState({
+            if (this.state.destination ===  null){
+                this.setState({
                 destination: props
-            })
+                })
+            }else{
+                this.setState({
+                    origin: props,
+                    destination: null
+                })
+            }
         }
+        let un = this.state.origin
+        let unn = this.state.destination
+        
+        if((this.state.destination !== null)&&(this.state.origin !== null)&&(this.state.destination.id < this.state.origin.id)){
+            
+            this.setState({origin:unn,destination:un})
+        }
+    
             /** faire condition avec texte != "" et les autres !!!<< */
         if((this.geox.mk[props.id].important === 1)&&(this.geox.mk[props.id].texte !== "")){
             this.setState({showingInfoWindow:true})
@@ -193,11 +223,10 @@ update = () => {
             this.setState({showingInfoWindow:false})
         }
 
-        console.log(this.geox.mk[this.state.activeMarker.id])
+        
 };
     FunctionTestAfficher = () => {
         if (this.geox.mk.length > 1){
-            console.log(this.geox.mk[0].lat);
             return this.geox.mk[1].lat
         }
     };
@@ -207,42 +236,70 @@ update = () => {
         console.log(this.geox.mk[this.state.selectedPlace.id]);
         this.geox.mk.splice(this.state.selectedPlace.id,1);
     
-        this.setState({nbmk: this.geox.mk.length, showingInfoWindow: false, selectedPlace: 0})
+        this.setState({nbmk: this.geox.mk.length,
+             showingInfoWindow: false, 
+             selectedPlace: 0,
+             origin:null,
+             destination:null
+
+            })
     };
 
     tracerItineraire = (points) => {
-        // let poits = points;
-        // // reùmplir tableau
-        // points.push (new Markeur());
-        // return points;
-        this.setState({
-            points : points.map((el, index) => {
+        
+        let result = []
+        let deux = []
+        let test = []
+        let un = []
+        let cy = []
+        
+       
+        un = this.geox.mk.slice(0,this.state.origin.id + 1)
+        deux = this.geox.mk.slice(this.state.destination.id,this.geox.mk.length)
+
+        let markerLess = 0
+
+        cy = points.map((el, index) => {
+            console.log(el, 'map')
+            if (markerLess % 2 === 0 ){
+                markerLess ++
+
                 const lat = el[0]
                 const lng = el[1]
+        
+                test.push(new Markeur("generate "+ this.geox.mk.length,lat,lng,))
+        
+                return test
+            }else {
+                markerLess ++
+            }
 
-                this.geox.mk.push(new Markeur("point "+ this.geox.mk.length,lat,lng))
-
-                return { lat: lat , lng : lng,}
-            }),
-            origin: null,
-            destination: null,
+    
         })
+
+             console.log(un)
+             console.log(deux)
+             console.log(cy)
+             result = result.concat(un)
+             result = result.concat(test)
+             result = result.concat(deux)
+
+
+        this.geox.mk = result
+        console.log(this.geox.mk)
+        this.setState({origin: null,destination: null,})
         // this.geox.mk.slice(1,2) 
     }
 
     render() {
 
-        let icon=Image2
+      
         let rows = [];
         let poli = [];
         let info="";
 
         for (var i = 0; i< this.geox.mk.length;i++){
-            if (this.geox.mk[i].important === 0){
-                icon = Image2;
-            } else {
-                icon = Image1;
-            }
+
             rows.push(
                 <Marker
                 id={i} name={this.geox.mk[i].nom}
@@ -257,8 +314,7 @@ update = () => {
      
 
       if((this.geox.mk.length > 0)&&(this.state.selectedPlace !== 0)){
-          
-          info= <div className="MarkeurInfo">
+          info= <div className="markeurInfo">
           <h2>{this.geox.mk[this.state.selectedPlace.id].titre}</h2>
           <p>{this.geox.mk[this.state.selectedPlace.id].texte}</p>
           <img className="imgdiv" src={this.geox.mk[this.state.selectedPlace.id].img} alt=""/>
@@ -272,7 +328,6 @@ update = () => {
 
         return (
             <div className="MAPP">
-                <button  className="boutonMarker" onClick={this.Modevtt}>Mode VTT {this.state.Vtt ? " Désactiver": " Activer"}</button>
                 <div className="mapSize">
                 <Itineraire 
                     tracerItin ={this.tracerItineraire}
@@ -282,7 +337,7 @@ update = () => {
                 <Map
                     style={style}
                     google={this.props.google}
-                    zoom={18}
+                    zoom={10}
                     initialCenter={{lat:43.599980, lng:1.443138}}
                     streetViewControl={false}
                     mapTypeControl={false}
@@ -306,12 +361,14 @@ update = () => {
                     </Map>
                     </div>
                     <div className="sectiondroit">
-                    <ul className="ulmap">
-                        <li><button  className="boutonMarker" onClick={this.deleteAll.bind(this)}>Supprimer tous les markeurs</button></li>
-                        <br/>
-                        <li><button  className="boutonMarker" onClick={this.delete.bind(this)}>Supprimer le dernier markeur</button></li>
-                        <br/>
-                        <li><button   className="boutonMarker" onClick={this.change.bind(this)}>{this.state.Poly ? " Désactiver": " Activer"} le tracer</button></li>
+                    <ul className="ulDroit" id="scroll_down">
+                        <li><button className="ulButton delAllButton" onClick={this.deleteAll.bind(this)}>Supprimer tous les marqueurs</button></li>
+
+                        <li><button className="ulButton delButton" onClick={this.delete.bind(this)}>Supprimer le dernier marqueur</button></li>
+
+                        <li><button className="ulButton tracerButton" onClick={this.change.bind(this)}>{this.state.Poly ? " Désactiver": " Activer"} le tracé</button></li>
+                    
+                        <li><button  className="ulButton vttButton" onClick={this.Modevtt}>{this.state.Vtt ? " Désactivé": " Activé"} Mode VTT </button></li>
                     </ul>
                     <div>
                     <MarkerConfig
@@ -322,7 +379,7 @@ update = () => {
                     />
                     </div>
                     </div>
-                    <div className="sectionbas">
+                    <div className="sectionRelative">
                         <Export jsonSave={this.geox.mk}/>
                         <Import jsonLoad={this.geox.mk} callback={this.update}/>
                     </div>
