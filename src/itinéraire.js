@@ -23,7 +23,9 @@ export default class Itineraire extends React.Component{
  
         const origin = this.props.origin
         const destination = this.props.destination
-
+       
+Migrer votre infrastructure sur Linux va nécessiter du temps et une planification méticuleuse : nous vous conseillons de ne pas attendre le dernier moment. Même si cela vous semble être une opération colossale, nous sommes là pour vous y aider tout en minimisant les risques et la complexité.  
+        if (origin !== null && destination !== null){
             const latO= origin.position.lat
             const lngO= origin.position.lng
 
@@ -44,7 +46,7 @@ export default class Itineraire extends React.Component{
 
             })
 
-  
+        }
    
     }
 
