@@ -258,7 +258,7 @@ update = () => {
         deux = this.geox.mk.slice(this.state.destination.id,this.geox.mk.length)
 
         let markerLess = 0
-        let point = this.geox.mk.length
+        let point = this.geox.mk.length - 1
 
         cy = points.map((el, index) => {
             console.log(el, 'map')
