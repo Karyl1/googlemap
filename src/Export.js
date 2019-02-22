@@ -24,7 +24,7 @@ class Export extends Component{
     exportJson = () => {
         let file = prompt("what's my name ?"); // Save le fichier demandé par l'utilisateur
         if(file !== null){
-        fetch('http://192.168.15.94:8080/save?name=' + this.sansAccent(file.toLowerCase())+ '.txt',{
+        fetch('http://192.168.16.102:8080/save?name=' + this.sansAccent(file.toLowerCase()) + '.txt',{
             method: 'POST',
             body: JSON.stringify(this.props.jsonSave)
         })

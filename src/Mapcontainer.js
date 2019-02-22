@@ -90,9 +90,9 @@ update = () => {
 
         this.geox.mk[this.state.selectedPlace.id].titre = titre;
         this.geox.mk[this.state.selectedPlace.id].texte = text;
-        this.geox.mk[this.state.selectedPlace.id].icon = Image1
+        this.geox.mk[this.state.selectedPlace.id].icon = Image1;
         this.geox.mk[this.state.selectedPlace.id].important = 1;
-        this.geox.mk[this.state.selectedPlace.id].img = img
+        this.geox.mk[this.state.selectedPlace.id].img = img;
         this.setState({nmbk:this.geox.mk.length});
         }
     }
@@ -123,7 +123,8 @@ update = () => {
             }
             this.setState({Vtt: true});
             console.log(this.state.Modevtt)
-        }if(this.state.Vtt === true){
+        }
+        if(this.state.Vtt === true){
             for(let i=0;i<this.geox.mk.length;i++){       
                 if(this.geox.mk[i].important === 1){
                     this.geox.mk[i].icon = Image1            /** << Permet quand on appuis sur un markeur de donner l'image de base  */
