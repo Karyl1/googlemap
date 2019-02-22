@@ -29,11 +29,11 @@ class MarkerConfig extends Component    {
                 <div>
                     <ul className="ulDroit">
                         
-                        <li className="formTitre">Ajouter un tire :<br /><input className="formText" placeholder="Votre titre..." id="titre"/></li>
+                        <li className="formTitre">Ajouter un titre :<br /><input className="formText" placeholder="Votre titre..." id="titre"/></li>
                         
                         <li className="formTitre">Ajouter un texte :<br /><textarea className="formText" placeholder="Votre texte..." id="inputxt"></textarea></li>
                         
-                        <li className="formTitre">Ajouter une image (https):<br /><input className="formText" placeholder="https://votre-image.exemple" id="inputClick" type="text"/></li>
+                        <li className="formTitre">Ajouter une image (https):<br /><input className="formText" placeholder="https://votre-image.exemple/" id="inputClick" type="text"/></li>
                        
                         <input className="formButton" onClick={this.toto} type="submit" value="Envoyer"/>
                     </ul>

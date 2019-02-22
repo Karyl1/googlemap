@@ -1,6 +1,4 @@
-
 import React from 'react';
-import { toGeoJSON } from '@mapbox/polyline';
 
 const apiKey ="AIzaSyA3Gsj08QzmXalEyHuuHgnzNKk4dGS6i84"
 const polyline = require('@mapbox/polyline')
@@ -16,7 +14,9 @@ export default class Itineraire extends React.Component{
                 }
     }
 
-    
+    alert = () => {
+        alert("Cliquez sur le premier et le dernier marqueur de votre parcours, puis appuyez sur le bouton 'Nouvel itinéraire' pour crée un itinéraire")
+    }
 
     getPosition = (e) => {
         e.preventDefault()
@@ -50,22 +50,27 @@ export default class Itineraire extends React.Component{
     }
 
     render(){
-
         return(
-            
             <div>
-                <p>Distance des deux points : {this.state.distance}  </p>
-                <form  >
-                    <button onClick={this.getPosition}>Nouvel itinéraire</button>
-                    <label>
-                    <input type='radio' id='driving' name='driving' value='driving'
-                checked={this.state.selected === 'driving'} onChange={(e) => 
-                this.setState({ selected: e.target.value })} />Voiture</label>
-                    <label><input type='radio' id='walking' name='myRadio' value='walking' 
-                     checked={this.state.selected === 'walking'} onChange={(e) => this.setState({ selected: e.target.value })} />À pied</label>
-                    <label><input type='radio' id='bicycling' name='myRadio' value='bicycling' 
-                checked={this.state.selected === 'bicycling'} onChange={(e) => this.setState({ selected: e.target.value })} />À vélo</label></form>
-            
+                
+                <div className="infoDistance">
+                    <p className="textDistance">Distance des deux points : {this.state.distance}  </p>
+                    <form>
+                        <div className="helpDistance">
+                        <button className="buttonDistance" onClick={this.getPosition}>Nouvel itinéraire</button>
+                    <p className="questionDistance" onClick={this.alert} title="Cliquez sur le premier et le dernier marqueur de votre parcours, puis appuyez sur le bouton 'Nouvel itinéraire' pour crée un itinéraire"><span role="img" aria-label="Question">❔</span></p>
+                    
+                        <label>
+                        <input type='radio' id='driving' name='driving' value='driving'
+                    checked={this.state.selected === 'driving'} onChange={(e) => 
+                    this.setState({ selected: e.target.value })} />Voiture</label>
+                        <label><input type='radio' id='walking' name='myRadio' value='walking' 
+                        checked={this.state.selected === 'walking'} onChange={(e) => this.setState({ selected: e.target.value })} />À pied</label>
+                        <label><input type='radio' id='bicycling' name='myRadio' value='bicycling' 
+                    checked={this.state.selected === 'bicycling'} onChange={(e) => this.setState({ selected: e.target.value })} />À vélo</label>
+                    </div>
+                    </form>
+                </div>
             </div>
         )
     }

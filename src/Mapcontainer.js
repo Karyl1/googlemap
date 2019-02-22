@@ -85,6 +85,7 @@ update = () => {
 
 
     ElementDiv = (titre,text,img,number) => {
+        if((titre !== "")||(text !== "")||(img!=="")){
         if((this.geox.mk.length > 0)&&(this.state.selectedPlace !== 0)){
 
         this.geox.mk[this.state.selectedPlace.id].titre = titre;
@@ -94,7 +95,7 @@ update = () => {
         this.geox.mk[this.state.selectedPlace.id].img = img
         this.setState({nmbk:this.geox.mk.length});
         }
-    
+    }
     }
 
   
@@ -110,7 +111,11 @@ update = () => {
     }
 
     Modevtt = () => {
+        if(this.state.Poly === false){
+            this.setState({Poly:true})
+        }
         if(this.state.Vtt === false){
+
             for(var i=0;i<this.geox.mk.length;i++){
                 if (!((i=== 0)||(i=== this.geox.mk.length - 1)||(this.geox.mk[i].important === 1))){
                         this.geox.mk[i].icon = Image4
@@ -136,20 +141,30 @@ update = () => {
     /** permet de supprimer un markeur depuis le bouton **/
     delete () {
         this.geox.mk.pop();
-        this.setState({nbmk:this.geox.mk.length})
-        this.setState({nbmk: this.geox.mk.length, showingInfoWindow: false,selectedPlace: 0})
+        
+        this.setState({
+            nbmk: this.geox.mk.length, 
+            showingInfoWindow: false,
+            selectedPlace: 0,
+            origin:null,
+            destination:null})
     }
 /** permet de supprimer tous les markeurs depuis le bouton **/
     deleteAll () {
 
         this.geox.mk.splice(0, this.geox.mk.length);
-        this.setState({nbmk: this.geox.mk.length, showingInfoWindow: false, selectedPlace: 0})
+        this.setState({nbmk: this.geox.mk.length, 
+            showingInfoWindow: false, 
+            selectedPlace: 0,
+            origin:null,
+            destination:null,
+        })
     }
 
 /** permet d'ajouter un markeur sur la map en appuyant sur click gauche**/
     handleMapClick(p1,p2,event) {
         this.setState({Vtt: false})
-        this.Modevtt()
+        
 
         var lat = event.latLng.lat();
         var lng = event.latLng.lng();
@@ -221,7 +236,13 @@ update = () => {
         console.log(this.geox.mk[this.state.selectedPlace.id]);
         this.geox.mk.splice(this.state.selectedPlace.id,1);
     
-        this.setState({nbmk: this.geox.mk.length, showingInfoWindow: false, selectedPlace: 0})
+        this.setState({nbmk: this.geox.mk.length,
+             showingInfoWindow: false, 
+             selectedPlace: 0,
+             origin:null,
+             destination:null
+
+            })
     };
 
     tracerItineraire = (points) => {
@@ -239,7 +260,7 @@ update = () => {
             const lat = el[0]
             const lng = el[1]
     
-            test.push(new Markeur("generate "+ this.geox.mk.length,lat,lng))
+            test.push(new Markeur("generate "+ this.geox.mk.length,lat,lng,))
     
             return test
     
@@ -265,17 +286,17 @@ update = () => {
 
     render() {
 
-        let icon=Image2
+      
         let rows = [];
         let poli = [];
         let info="";
 
         for (var i = 0; i< this.geox.mk.length;i++){
-            if (this.geox.mk[i].important === 0){
-                icon = Image2;
-            } else {
-                icon = Image1;
-            }
+            // if (this.geox.mk[i].important === 0){
+            //     this.iicon = Image2;
+            // } else {
+            //     this.iicon = Image1;
+            // }
             rows.push(
                 <Marker
                 id={i} name={this.geox.mk[i].nom}
@@ -290,8 +311,7 @@ update = () => {
      
 
       if((this.geox.mk.length > 0)&&(this.state.selectedPlace !== 0)){
-          
-          info= <div className="MarkeurInfo">
+          info= <div className="markeurInfo">
           <h2>{this.geox.mk[this.state.selectedPlace.id].titre}</h2>
           <p>{this.geox.mk[this.state.selectedPlace.id].texte}</p>
           <img className="imgdiv" src={this.geox.mk[this.state.selectedPlace.id].img} alt=""/>
@@ -345,7 +365,7 @@ update = () => {
 
                         <li><button className="ulButton tracerButton" onClick={this.change.bind(this)}>{this.state.Poly ? " Désactiver": " Activer"} le tracé</button></li>
                     
-                        <li><button  className="ulButton vttButton" onClick={this.Modevtt}>Mode VTT {this.state.Vtt ? " Désactivé": " Activé"}</button></li>
+                        <li><button  className="ulButton vttButton" onClick={this.Modevtt}>{this.state.Vtt ? " Désactivé": " Activé"} Mode VTT </button></li>
                     </ul>
                     <div>
                     <MarkerConfig
