@@ -1,4 +1,5 @@
 import React from 'react';
+import Swal from 'sweetalert2';
 
 const apiKey ="AIzaSyA3Gsj08QzmXalEyHuuHgnzNKk4dGS6i84"
 const polyline = require('@mapbox/polyline')
@@ -15,7 +16,7 @@ export default class Itineraire extends React.Component{
     }
 
     alert = () => {
-        alert("Cliquez sur le premier et le dernier marqueur de votre parcours, puis appuyez sur le bouton 'Nouvel itinéraire' pour crée un itinéraire")
+        Swal.fire({type: 'info', text : "Cliquez sur le premier et le dernier marqueur de votre parcours, puis appuyez sur le bouton 'Nouvel itinéraire' pour crée un itinéraire"})
     }
 
     getPosition = (e) => {

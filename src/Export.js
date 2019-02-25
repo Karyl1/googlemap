@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Swal from 'sweetalert2';
 
 // Permet de remplacer tout les caractères accentués par des caractères non accentués
 class Export extends Component{
@@ -22,21 +23,36 @@ class Export extends Component{
     }
 
     exportJson = () => {
-        let file = prompt("what's my name ?"); // Save le fichier demandé par l'utilisateur
-        if(file !== null){
-        fetch('http://192.168.16.102:8080/save?name=' + this.sansAccent(file.toLowerCase()) + '.txt',{
-            method: 'POST',
-            body: JSON.stringify(this.props.jsonSave)
-        })
-        .then(data=>data)
-        .then(res=>{console.log(res)})
-        .then(res=>{console.log(JSON.stringify(this.props.jsonSave))})
-        .catch(error=>{console.log(error)})
-    }} // Envoie en string le tableau en format JSON
+        Swal.fire({title: "Quel est mon nom ?", 
+        input: "text",
+        preConfirm: (save) => {
+            if(save !== null){
+            fetch('http://192.168.16.102:8080/save?name=' + this.sansAccent(save.toLowerCase()) + '.txt',{
+                method: 'POST',
+                body: JSON.stringify(this.props.jsonSave)
+            })
+            .then(data=>data)
+            .then(res=>{console.log(res)})
+            .then(res=>{console.log(JSON.stringify(this.props.jsonSave))})
+            .catch(error=>{console.log(error)})
+        }}})};
+    // ***************** Alternative sans SweatAlert2 ***************** //
+    // }); // Save le fichier demandé par l'utilisateur
+    //        let file = prompt("Quel est mon nom ?");
+    // //     if(file !== null){
+    // //     fetch('http://192.168.16.102:8080/save?name=' + this.sansAccent(file.toLowerCase()) + '.txt',{
+    // //         method: 'POST',
+    // //         body: JSON.stringify(this.props.jsonSave)
+    // //     })
+    // //     .then(data=>data)
+    // //     .then(res=>{console.log(res)})
+    // //     .then(res=>{console.log(JSON.stringify(this.props.jsonSave))})
+    // //     .catch(error=>{console.log(error)})
+    // // }} // Envoie en string le tableau en format JSON
     render(){
         return(
             <div>
-            <button onClick={this.exportJson} className="export">Save</button>
+            <button onClick={this.exportJson} className="export">Sauvegarder</button>
             </div>
         )
     }
