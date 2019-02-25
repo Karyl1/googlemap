@@ -3,8 +3,8 @@ import {Map, InfoWindow, Polyline, Marker, GoogleApiWrapper} from 'google-maps-r
 import "./App.css";
 import Geox from './Geox';
 import MarkerConfig from "./MarkerConfig";
-import Export from './Export';
-import Import from './Import';
+// import Export from './Export';
+// import Import from './Import';
 import Image1 from './image1.png';
 import Image2 from './image2.png'
 import Image3 from './Image3.png'
@@ -203,8 +203,8 @@ update = () => {
                 })
             }else{
                 this.setState({
-                    origin: props,
-                    destination: null
+                    origin: this.state.destination,
+                    destination: props,
                 })
             }
         }
@@ -380,10 +380,10 @@ update = () => {
                     />
                     </div>
                     </div>
-                    <div className="sectionRelative">
+                    {/* <div className="sectionRelative">
                         <Export jsonSave={this.geox.mk}/>
                         <Import jsonLoad={this.geox.mk} callback={this.update}/>
-                    </div>
+                    </div> */}
 
 
             </div>
