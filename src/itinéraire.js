@@ -47,11 +47,11 @@ export default class Itineraire extends React.Component{
                 }
                 else{
                     if (this.state.selected === 'driving' )
-                        alert(`Impossible d'aller vers cette destination en voiture` )
+                        Swal.fire({title : "Erreur !", type: "error", text : `Impossible d'aller vers cette destination en voiture` });
                     if (this.state.selected === 'walking' )
-                        alert(`Impossible d'aller vers cette destination à pied` )
+                        Swal.fire({title : "Erreur !", type: "error", text : `Impossible d'aller vers cette destination à pied` });
                     if (this.state.selected === 'bicycling' )
-                        alert(`Impossible d'aller vers cette destination à vélo` )
+                        Swal.fire({title : "Erreur !", type: "error", text : `Impossible d'aller vers cette destination à vélo` });
                 }  
             })
 

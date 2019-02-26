@@ -23,7 +23,16 @@ class Import extends Component {
                         this.props.jsonLoad.push(tmp);
                     } // Récupère le fichier demandé par l'utilisateur
                     this.props.callback();
-                })}}})};
+                })
+                .catch(error=>{Swal.fire(
+                    'Oh non !...',
+                    'Le fichier à mal été enregistré',
+                    'error'
+                  )})
+            }
+        }
+    })
+};
         // let file = prompt("What's her name ?"); //Load le fichier demandé par l'utilisateur
         // if(file !== null){
         // fetch('http://192.168.16.102:8080/load?name=' + file.toLowerCase() + '.txt')
@@ -46,7 +55,8 @@ class Import extends Component {
         //     'Oh non !...',
         //     'Le fichier à mal été enregistré',
         //     'error'
-        //   )})}
+        //   )})
+        // }
     // };
     render(){
         return(

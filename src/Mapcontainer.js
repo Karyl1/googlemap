@@ -274,8 +274,6 @@ update = () => {
             }else {
                 markerLess ++
             }
-
-    
         })
 
              console.log(un)

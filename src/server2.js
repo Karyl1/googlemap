@@ -62,28 +62,30 @@ var server = http.createServer(function(req, res) {
   else if (page == '/save') {
       var params = querystring.parse(url.parse(req.url).query);
       if (req.method=='POST') {
-          var body = '';
-          req.on('data', function (data) { body += data; });
-          req.on('end', function () { console.log("Body: " + body); });
-          if ('name' in params) {
-            fs.unlink(params.name, function (err) {
-                  fs.open(params.name,'a',0o666, function (err,fd) {
-                      if (err) throw err;
-                      fs.write(fd,body,0,'utf8', function(err,written,string) {
-                          if (err) throw err;
-                          res.write('File saved!');
-                          res.end();   
-                          fs.close(fd,function(err) {
-                              if (err) throw err;
-                          })
-                      })
-                  });
-              });
-          }
-          else {
+        if ('name' in params) {
+            var body = '';
+            req.on('data', function (data) { body += data; });
+            req.on('end', function () { 
+                console.log("Body: " + body); 
+                fs.unlink(params.name, function (err) {
+                    fs.open(params.name,'a',0o666, function (err,fd) {
+                        if (err) throw err;
+                        fs.write(fd,body,0,'utf8', function(err,written,string) {
+                            if (err) throw err;
+                            res.write('File saved!');
+                            res.end();   
+                            fs.close(fd,function(err) {
+                                if (err) throw err;
+                            })
+                        })
+                    });
+                });
+            });
+        }
+        else {
             res.write('File NOT saved!');
             res.end();   
-          }
+        }
       }
       else if (('name' in params) && ('string' in params)) {
         fs.unlink(params.name, function (err) {
