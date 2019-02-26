@@ -16,7 +16,7 @@ export default class Itineraire extends React.Component{
     }
 
     alert = () => {
-        Swal.fire({type: 'info', text : "Cliquez sur le premier et le dernier marqueur de votre parcours, puis appuyez sur le bouton 'Nouvel itinéraire' pour crée un itinéraire"})
+        Swal.fire({type: 'info', text : "Cliquez sur le premier et le dernier marqueur de votre parcours, puis appuyez sur le bouton 'Nouvel itinéraire' pour créer un itinéraire"})
     }
 
     getPosition = (e) => {
@@ -68,7 +68,7 @@ export default class Itineraire extends React.Component{
                     <form>
                         <div className="helpDistance">
                         <button className="buttonDistance" onClick={this.getPosition}>Nouvel itinéraire</button>
-                    <p className="questionDistance" onClick={this.alert} title="Cliquez sur le premier et le dernier marqueur de votre parcours, puis appuyez sur le bouton 'Nouvel itinéraire' pour crée un itinéraire"><span role="img" aria-label="Question">❔</span></p>
+                    <p className="questionDistance" onClick={this.alert} title="Cliquez sur le premier et le dernier marqueur de votre parcours, puis appuyez sur le bouton 'Nouvel itinéraire' pour créer un itinéraire"><span role="img" aria-label="Question">❔</span></p>
                     
                         <label>
                         <input type='radio' id='driving' name='driving' value='driving'
