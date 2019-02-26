@@ -270,10 +270,10 @@ update = () => {
         
                 test.push(new Markeur("generate "+ point,lat,lng,))
                 point ++
-                return test
+                
             }else {
                 markerLess ++
-            }
+            }return el;
         })
 
              console.log(un)
